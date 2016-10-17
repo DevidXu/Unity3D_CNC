@@ -1,0 +1,28 @@
+Sub main
+t = Timer
+sumt = 0
+Xaxis = 0
+Begin Dialog Buttonsample 16,32,120,56,"Time length Setting"
+OKButton 62,8,40,14
+CancelButton 62,28,40,14
+Text 8,8,42,8,"Time length(s):"
+TextBox 8,20,30,12,.TextBox1
+End Dialog
+
+Dim Dlg1 As Buttonsample
+Button = Dialog ( Dlg1 )
+timelength = Dlg1.textbox1
+
+Do While sumt<timelength
+If Timer - t > 1 Then
+	t = Timer
+	x = GetScale(0)  
+	Open "D:\test.txt" For output As #1 'ÐÂ½¨txtÎÄµµ
+	Print #1, x
+	Close #1
+	sumt = sumt + 1
+	Else 
+	sleep(100)
+End If
+Loop
+End Sub  
