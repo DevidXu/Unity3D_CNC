@@ -1,0 +1,38 @@
+Create trigger£º
+CREATE TRIGGER updated_data
+  
+  AFTER INSERT
+  ON linear_position
+  
+    FOR EACH ROW
+  EXECUTE PROCEDURE func_update();
+
+
+
+
+Trigger Function:
+CREATE OR REPLACE FUNCTION func_update()
+  
+  RETURNS trigger AS
+
+$BODY$
+	
+  begin
+		
+    delete from data_update;
+		 
+    insert into data_update values(new.x_axis, new.y_axis, new.z_axis);
+		
+    return NULL;
+	
+  end;
+
+$BODY$
+  
+  LANGUAGE plpgsql VOLATILE
+  
+  COST 100;
+
+ALTER FUNCTION func_update()
+  
+  OWNER TO postgres;
